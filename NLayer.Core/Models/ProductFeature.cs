@@ -8,7 +8,6 @@ namespace NLayer.Core.Models
 {
     public class ProductFeature
     {
-        //base entity vermeye gerek yok çünkü zaten productın oluşturulma tarihi ile aynı
         public int Id { get; set; }
         public string Color { get; set; }
         public int Height { get; set; }
