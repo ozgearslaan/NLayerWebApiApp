@@ -11,8 +11,6 @@ namespace NLayer.Core.Services
     public interface ICategoryService:IService<Category>
     {
         public Task<CustomResponseDto<CategoryWithProductsDto>> GetSingleCategoryByIdWithProducts(int categoryId);
-        //servis olduğu için customresponse dtoda dönüyoruz
-        //api ın istediği dto
 
     }
 }
