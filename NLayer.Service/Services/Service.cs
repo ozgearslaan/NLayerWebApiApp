@@ -16,9 +16,7 @@ namespace NLayer.Service.Services
     public class Service<T> : IService<T> where T : class
     {
         private readonly IGenericRepository<T> _repository;
-        //repo ile haberleşecek
         private readonly IUnitOfWork _unitOfWork;
-        //repoda savechangei çağırmadık o yüzden unitofworkle haberleşecek
         public Service(IGenericRepository<T> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
@@ -30,7 +28,6 @@ namespace NLayer.Service.Services
         {
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsycn();
-            //savechangei çağırdık, commitasync demiştik
             return entity;
         }
 
@@ -48,14 +45,12 @@ namespace NLayer.Service.Services
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            //tolist tolistasnc çağırılır
             return await _repository.GetAll().ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
             var hasProduct = await _repository.GetByIdAsync(id);
-            //try cash yaptık return yerine 
             if(hasProduct == null) 
             {
                 throw new NotFoundException($"{typeof(T).Name}({id}) not found");
@@ -84,9 +79,7 @@ namespace NLayer.Service.Services
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-            //ıqueryable dönüyor async yok
             return _repository.Where(expression);
-            //where methodunun savechangeini apida çağıracağız
         }
     }
 }
