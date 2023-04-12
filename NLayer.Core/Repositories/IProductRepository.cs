@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace NLayer.Core.Repositories
 {
     public interface IProductRepository:IGenericRepository<Product>
-    {//productla alakalı işlemler için artık IProductRepositoryi alacak
+    {
         Task<List<Product>> GetProductsWithCategory();
-        //asenkron olacak
 
     }
 }
