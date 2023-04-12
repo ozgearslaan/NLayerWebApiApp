@@ -14,9 +14,7 @@ namespace NLayer.API.Middlewares
                 config.Run(async context =>
                 {
                     context.Response.ContentType = "application/json";
-                    //contenttypeı belirledim
                     var exceptionFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    //hata fırlatıldıysa al
                     var statusCode = exceptionFeature.Error switch
                     {
                         ClientSideException => 400,
@@ -26,12 +24,9 @@ namespace NLayer.API.Middlewares
                     context.Response.StatusCode = statusCode;
 
                     var response = CustomResponseDto<NoContentDto>.Fail(statusCode, exceptionFeature.Error.Message);
-                    //fail nocontent dön
+
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
-                    //controllerda otomatik dönüyor burda kendimiz jsona döndürmeliyiz
                 });
-                //run sonlandırıcı bir middleware
-                //request buraya girdiği anda geri dönecek
             });
         }
     }
