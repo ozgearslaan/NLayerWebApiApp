@@ -18,8 +18,7 @@ namespace NLayer.Repository.Repositories
         public async Task<Category> GetSingleCategoryByIdWithProductsAsync(int categoryId)
         {
             return await _context.Categories.Include(x=> x.Products).Where(x=>x.Id == categoryId).SingleOrDefaultAsync();
-            //bu idden 4-5 tane varsa hata döner
-            //firstordefault yazarsak 4-5 tane varsa ilkini bulup döndürür
+
         }
     }
 }
