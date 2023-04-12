@@ -10,15 +10,9 @@ using System.Threading.Tasks;
 namespace NLayer.Repository.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
-        //generic çünkü yazdığımız bu operasyonlar tüm entityler için geçerli olsun
     {
         protected readonly AppDbContext _context;
-        //sadece miras alınan sınıflardan erişebilmek istediğimiz için protected
-        //db ile ilgili işlem yapabilmek için appdbcontext nesnesine ihtiyaç var
         private readonly DbSet<T> _dbSet;
-        //veritabanındaki tabloya denk geliyor
-        //inşa edilirken set edildiği için readonly tanımladık.
-        //sadece constractureda ya da inşa edilirken değer atanır daha sonradan atanamaz
 
         public GenericRepository(AppDbContext context)
         {
@@ -43,8 +37,6 @@ namespace NLayer.Repository.Repositories
         public IQueryable<T> GetAll()
         {
             return _dbSet.AsNoTracking().AsQueryable();
-            //daha veritabanına gitmeden iquerayble dönelim, tolist dyince dbye yansısın
-            //asnotracking çekmiş olduğu verileri memorye atmasın, daha gızlı çalışmasını sağlar
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -55,17 +47,11 @@ namespace NLayer.Repository.Repositories
         public void Remove(T entity)
         {
             _dbSet.Remove(entity);
-            //async methodu yok, daha dbden silmez, sadece efcoreun memoryde 
-            //id sine entityi track ediyor o entitynin stateini delete olarak işaretliyor
-            //savechangei calıştırınca db de değişiklik oluyor
-            //_context.Entry(entity).State=EntityState.Deleted
-            //yukarıdaki methodla aynı
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
-            //foreachle dönüyor
         }
 
         public void Update(T entity)
