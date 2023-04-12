@@ -15,12 +15,9 @@ namespace NLayer.Repository.Configurations
         {
             //primary key
             builder.HasKey(x => x.Id);
-            //bir bir artan değer olmasını istiyorum
             builder.Property(x => x.Id).UseIdentityColumn();
-            //null olamaz(zorunlu alan) ve 50 karakter maximum
             builder.Property(x=> x.Id).IsRequired().HasMaxLength(50);
             builder.ToTable("Categories");
-            //eğer bunu tanımlamazsak dbsetteki propertye verdiğimiz ismi default olarak alır
         }
     }
 }
