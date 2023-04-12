@@ -29,32 +29,13 @@ builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilte
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
-});//validationýn kendi döndüðü filtreyi kendi filtremizle baskýladýk
-//mvc tarafýnda filterý baskýlamamýza gerek yok 
-//apida default olarak açýk çünkü
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMemoryCache();//cachele haberdar ettik
-
-//notfoundfilterý program cs e de ekledik
-
-//ayrý repositoryler kullanýyoruz ve ayrý ayrý interfaceler var onlarý da eklemek lazým ki migration yapabilelim
-
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
-//ýunitofwork ile karþýlaþýrsan unitofworkten nesne alacaksýn
-//genericleri typeofla ekleyeceðiz, birden fazla generic alsaydý <,> veya <,,> koyacaktýk
-//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-//builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
-//T aldýðý için <>
-//mapping
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
-//builder.Services.AddScoped<IProductService,ProductService>();
-//builder.Services.AddScoped<IProductRepository,ProductRepository>();
-//productwithcategory için ekledik
-//builder.Services.AddScoped<ICategoryService, CategoryService>();
-//.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
@@ -63,16 +44,10 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     
     });
-    //migration dosyalarý repository oluþacak ve appdbcontextte repository katmanýnda
-    //o yüzden appdbcontextin bulunmuþ olduðu assemblyi api tarafýnda uygulamaya haber vermemiz lazým
-    //optionla içine girilir
 });
 
 builder.Host.UseServiceProviderFactory
     (new AutofacServiceProviderFactory());
-//autofac kütüphanesi
-//modül ekleyeceðiz ve dinamik olarak ekleme yapabileceðiz.
-
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
 
 
