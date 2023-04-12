@@ -14,9 +14,8 @@ namespace NLayer.Repository.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-            //feature ve productın bire bir ilişkisi var foreign key ilişkisi aşağıdaki gibi yazılır
             builder.HasOne(x => x.Product).WithOne(x => x.ProductFeature).HasForeignKey<ProductFeature>(x=>x.ProductId);
-            //birebir olduğu için generic olarak belirttik
+ 
         }
     }
 }
