@@ -20,9 +20,6 @@ namespace NLayer.Repository.Seeds
                 new Product { Id = 4, CategoryId = 2, Name = "Kitap 1", Price = 200, Stock = 30, CreatedDate = DateTime.Now },
                 new Product { Id = 5, CategoryId = 2, Name = "Kitap 3", Price = 2000, Stock = 300, CreatedDate = DateTime.Now });
 
-            //updatedate'i girmeyeceğiz, updatedate update edilirken merkezi bir yerden yazılacak
-            //dbcontextte intercepter yazacağız araya girici method yazacağız
-            //savechange methodunu override edeceğiz
         }
     }
 }
