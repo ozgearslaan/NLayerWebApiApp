@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayer.Repository.Configurations
+namespace NLayer.Repository.Configurations 
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
